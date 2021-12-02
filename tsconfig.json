@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "strictNullChecks": false,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "noImplicitAny": false
+  }
+}
