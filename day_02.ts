@@ -1,6 +1,6 @@
 import {fetchInputData} from "./libraries";
 
-var isNode = require('detect-node');
+const isNode = require('detect-node');
 
 const year = 2021
 const day = 2;
@@ -19,7 +19,7 @@ if (isNode) {
 // START HERE
 ///////////////////////////////////////////////////
 
-let rows = file.split("\n");
+const rows = file.split("\n");
 
 let forward = 0
 let down = 0
@@ -33,10 +33,10 @@ function parseWith(s: string, token: string) {
 }
 
 for (let i = 0; i < rows.length; i++) {
-    let s = rows[i]
-    let parsed = parseWith(s, "forward ");
+    const s = rows[i]
+    const parsed = parseWith(s, "forward ");
     forward += parsed
-    let number = parsed * down;
+    const number = parsed * down;
     depth += number;
     down += parseWith(s, "down ");
     down -= parseWith(s, "up ");

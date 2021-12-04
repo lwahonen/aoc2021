@@ -1,7 +1,7 @@
 import {fetchInputData} from "./libraries";
 import {filter} from "lodash";
 
-var isNode = require('detect-node');
+const isNode = require('detect-node');
 
 const year = 2021
 const day = 3;
@@ -22,14 +22,14 @@ if (isNode) {
 
 let r = file.split("\n")
 
-let {most, least} = countDigits(r);
-let part1 = parseInt(most, 2) * parseInt(least, 2);
+const {most, least} = countDigits(r);
+const part1 = parseInt(most, 2) * parseInt(least, 2);
 console.log("Part 1 answer is " + part1);
 
-let O2 = part2_loop("most");
-let scrub = part2_loop("least");
+const O2 = part2_loop("most");
+const scrub = part2_loop("least");
 
-let part2 = parseInt(O2, 2) * parseInt(scrub, 2);
+const part2 = parseInt(O2, 2) * parseInt(scrub, 2);
 console.log("Part 2 answer is " + part2);
 
 function countDigits(rows) {
@@ -65,12 +65,12 @@ function part2_loop(key: string) {
     r = file.split("\n");
 
     for (let i = 0; i < r[0].length; i++) {
-        let pair = countDigits(r);
-        let pairElement = pair[key];
-        let newr = [];
+        const pair = countDigits(r);
+        const pairElement = pair[key];
+        const newr = [];
 
         for (let j = 0; j < r.length; j++) {
-            let item = r[j];
+            const item = r[j];
             if (item.charAt(i) == pairElement.charAt(i)) {
                 newr.push(item);
             }

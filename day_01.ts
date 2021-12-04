@@ -1,6 +1,6 @@
 import {fetchInputData} from "./libraries";
 
-var isNode = require('detect-node');
+const isNode = require('detect-node');
 
 const year = 2021
 const day = 1;
@@ -19,9 +19,7 @@ if (isNode) {
 // START HERE
 ///////////////////////////////////////////////////
 
-let rows = file.split("\n").map(f => parseInt(f))
-
-let a = rows.length;
+const rows = file.split("\n").map(f => parseInt(f))
 
 let last = 0;
 let inc = -1;
@@ -36,7 +34,7 @@ console.log("Part 1: " + inc)
 last = 0;
 inc = -1;
 for (let i = 0; i < rows.length - 2; i++) {
-    let number = rows[i] + rows[i + 1] + rows[i + 2];
+    const number = rows[i] + rows[i + 1] + rows[i + 2];
     if (number > last) {
         inc++
     }

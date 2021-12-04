@@ -21,6 +21,23 @@ export const levenshtein = (a: string, b: string): number => {
     return matrix[a.length - 1][b.length - 1]
 }
 
+export const parseMap = (input: string) => {
+    let r = input.split("\n")
+    let tiles = r.map(f => f.split(""))
+
+    let patches = {}
+    let x_max = tiles[0].length
+    let y_max = tiles.length
+
+    for (let y = 0; y < y_max; y++) {
+        for (let x = 0; x < x_max; x++) {
+            patches[`${x},${y}`] = tiles[y][x];
+        }
+    }
+    return patches
+}
+
+
 export function fetchInputData(year: number, day: number) {
     let path1 = `/Users/lwahonen/Dropbox/advent/2018/data/day_${year}_${day}.txt`;
     if (fs.existsSync(path1)) {
