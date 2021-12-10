@@ -22,12 +22,17 @@ if (isNode) {
 /// ////////////////////////////////////////////////
 //
 const testInput = 0;
+// @ts-ignore
 if (testInput == 1) {
-    file = `2199943210
+    file = `
+
+2199943210
 3987894921
 9856789892
 8767896789
-9899965678`;
+9899965678
+
+`;
 }
 const debug = false
 
@@ -36,7 +41,7 @@ const data = file.trim().split("\n").map(f => f.split("").map(a => parseInt(a)))
 const max_y = data[0].length;
 const max_x = data.length;
 
-const lowPoints = new Set();
+const basins = new Set();
 for (let x = 0; x < max_x; x++) {
     for (let y = 0; y < max_y; y++) {
         if (x > 0 && data[x][y] >= data[x - 1][y])
@@ -48,13 +53,13 @@ for (let x = 0; x < max_x; x++) {
         if (y < max_y - 1 && data[x][y] >= data[x][y + 1])
             continue
         if (debug) console.log(`Lowpoint found at ${x},${y}`)
-        lowPoints.add({x, y})
+        basins.add({x, y})
     }
 }
 
 let part1 = 0
 {
-    lowPoints.forEach(coords => {
+    basins.forEach(coords => {
         // @ts-ignore
         part1 += 1 + data[coords.x][coords.y]
     })
@@ -62,7 +67,7 @@ let part1 = 0
 console.log(`Part 1 answer ${part1}`)
 
 const part2 = []
-lowPoints.forEach(coords => {
+basins.forEach(coords => {
     // @ts-ignore
     const basin = countBasin(-1, coords.x, coords.y, new Set<string>());
     if(debug) console.log(`Basin size ${basin}`)
