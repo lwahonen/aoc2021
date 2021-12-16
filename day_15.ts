@@ -1,3 +1,4 @@
+#!/usr/bin/env ts-node-script
 /*eslint no-constant-condition: ["error", { "checkLoops": false }]*/
 import {fetchInputData} from './libraries';
 import _ = require("lodash");
