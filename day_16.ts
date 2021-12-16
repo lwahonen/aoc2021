@@ -69,42 +69,28 @@ A0016C880162017C3686B18A3D4780
 const debug = false;
 
 let data = file.trim().split("\n").map(f => f.split("").map(a => {
-    if (a == "0") return "0000";
-    if (a == "1") return "0001";
-    if (a == "2") return "0010";
-    if (a == "3") return "0011";
-    if (a == "4") return "0100";
-    if (a == "5") return "0101";
-    if (a == "6") return "0110";
-    if (a == "7") return "0111";
-    if (a == "8") return "1000";
-    if (a == "9") return "1001";
-    if (a == "A") return "1010";
-    if (a == "B") return "1011";
-    if (a == "C") return "1100";
-    if (a == "D") return "1101";
-    if (a == "E") return "1110";
-    if (a == "F") return "1111";
+    return parseInt(a, 16).toString(2).padStart(4, "0");
 }))
+
 let joined = data.join("").replace(/,/g, "");
 
 function parsePackets(stream: string) {
     if(debug)console.log(`\nParsing ${stream}`)
-    let packet = {}
-    packet["subpackets"] = []
     // Empty tail
     if (stream.search("1") == -1) {
         if(debug) console.log("Empty tail found, bailing");
         return null;
     }
 
-    let ver = stream.substr(0, 3);
-    let type = stream.substr(3, 3);
+    let packet = {}
+    packet["subpackets"] = []
+    let ver = parseInt(stream.substr(0, 3),2)
+    let type = parseInt(stream.substr(3, 3),2);
     packet["version"] = ver;
     packet["type"] = type;
     packet["size"] = 6;
     if (debug) console.log(`Next packet type ${type} and version ${ver}`);
-    if (type == "100") {
+    if (type == 4) {
         let num = "";
         let n = 0;
         while (true) {
@@ -117,7 +103,7 @@ function parsePackets(stream: string) {
             n++;
         }
         if (debug) console.log(`Data for packet is ${num}`);
-        packet["data"] = num;
+        packet["data"] = parseInt(num,2);
         return packet;
     } else {
         packet["size"] += 1
@@ -174,16 +160,16 @@ function parsePackets(stream: string) {
 let packets = parsePackets(joined)
 
 function countVersions(packet:any) {
-    let versum = parseInt(packet["version"],2);
+    let versum = packet["version"];
     for(let p of packet["subpackets"])
         versum += countVersions(p);
     return versum;
 }
 
 function evalPacket(packet:any) {
-    let type = parseInt(packet["type"],2);
+    let type = packet["type"];
     if(type == 4)
-        return parseInt(packet["data"], 2);
+        return packet["data"];
     if(type == 0) {
         let sum = 0
         for (let p of packet["subpackets"])
@@ -234,5 +220,3 @@ function evalPacket(packet:any) {
 
 console.log("Part 1: "+countVersions(packets))
 console.log("Part 2: "+evalPacket(packets))
-
-console.log(evalPacket(packets))
