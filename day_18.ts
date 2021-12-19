@@ -199,7 +199,7 @@ while (true) {
 if(debug)console.log(`Final product: ${part1}`)
 console.log(`Part 1: ${getMagnitude(part1)}`)
 
-inputs = file.trim().split("\n").map(f=>f.trim());
+inputs = file.trim().split("\n");
 
 let maxmag = 0;
 for (let first of inputs) {
