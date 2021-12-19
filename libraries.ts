@@ -1,5 +1,4 @@
 import * as fs from "fs";
-import {execSync} from "child_process";
 
 export const levenshtein = (a: string, b: string): number => {
     const matrix = Array.from({length: a.length})
@@ -55,4 +54,10 @@ export function fetchInputData(year: number, day: number) {
     fs.writeFileSync(path1, data);
     return data
 
+}
+
+export function keyCount(myobj: any) {
+    var count = 0;
+    for (let k in myobj) if (myobj.hasOwnProperty(k)) ++count;
+    return count;
 }
