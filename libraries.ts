@@ -33,7 +33,7 @@ export const parseMap = (input: string) => {
             patches[`${x},${y}`] = tiles[y][x];
         }
     }
-    return patches
+    return {patches: patches, x_max: x_max, y_max: y_max}
 }
 
 
