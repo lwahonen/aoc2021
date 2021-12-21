@@ -87,15 +87,12 @@ function whoWins(one_score: number, one_pos: number, two_score: number, two_pos:
         }
     }
 
-    if (player_two_turns.length == 0) {
-        return {one_wins: player_one_wins, two_wins: player_two_wins}
-    }
-
     for (let possible of player_two_turns) {
         let round = whoWins(possible.score_one, possible.pos_one, possible.score_two, possible.pos_two)
         player_one_wins += round.one_wins;
         player_two_wins += round.two_wins;
     }
+
     let answer = {one_wins: player_one_wins, two_wins: player_two_wins};
     cached[cache_key] = answer
     if (debug) console.log("Needed to calculate winners for " + cache_key)
