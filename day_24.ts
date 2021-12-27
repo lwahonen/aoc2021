@@ -66,7 +66,7 @@ if(debug) console.log("add y instructions range: "+JSON.stringify(AY))
 
 let states_for_z={}
 states_for_z[-1]= {};
-states_for_z[-1][0]="";
+states_for_z[-1][0]={previous:[0], digits:""};
 
 for (let i = 0; i < 14; i++) {
     states_for_z[i] = {};
@@ -81,18 +81,26 @@ for (let i = 0; i < 14; i++) {
             // Can reach the same state with a higher value for 1st digit
             if (states_for_z[i].hasOwnProperty(z_state))
                 continue;
-            states_for_z[i][z_state] = prevStates[prevstate] + j;
+            let last = prevStates[prevstate];
+            // The pushes from first 4 digits need to match the pops of the last four digits
+            if (i >= 10 && last.previous[13 - i] != z_state)
+                continue;
+            let previous = last.previous;
+            if (i < 5)
+                previous = previous.concat([z_state]);
+            states_for_z[i][z_state] = {previous: previous, digits: last.digits + j,};
         }
         // let z_state = get_next_z(i, 0, j)
     }
 }
 
-console.log("Part 1: "+states_for_z[13][0])
+console.log("All possible solutions found. Total variations "+keyCount(states_for_z[13])+" objects")
+console.log("Part 1: "+JSON.stringify(states_for_z[13][0].digits))
 
 
 states_for_z={}
 states_for_z[-1]= {};
-states_for_z[-1][0]="";
+states_for_z[-1][0]={previous:[0], digits:""};
 
 for (let i = 0; i < 14; i++) {
     states_for_z[i] = {};
@@ -107,13 +115,21 @@ for (let i = 0; i < 14; i++) {
             // Can reach the same state with a higher value for 1st digit
             if (states_for_z[i].hasOwnProperty(z_state))
                 continue;
-            states_for_z[i][z_state] = prevStates[prevstate] + j;
+            let last = prevStates[prevstate];
+            // The pushes from first 4 digits need to match the pops of the last four digits
+            if (i >= 10 && last.previous[13 - i] != z_state)
+                continue;
+            let previous = last.previous;
+            if (i < 5)
+                previous = previous.concat([z_state]);
+            states_for_z[i][z_state] = {previous: previous, digits: last.digits + j,};
         }
         // let z_state = get_next_z(i, 0, j)
     }
 }
 
-console.log("Part 2: "+states_for_z[13][0])
+console.log("All possible solutions found. Total variations "+keyCount(states_for_z[13])+" objects")
+console.log("Part 2: "+JSON.stringify(states_for_z[13][0].digits))
 
 function get_next_z(input_index,last_z,input_char) {
     /*
